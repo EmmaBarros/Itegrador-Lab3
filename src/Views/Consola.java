@@ -4,11 +4,13 @@ package Views;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 /**
  *
  * @author pc
  */
 public class Consola {
+    private static final Scanner teclado = new Scanner(System.in);
     /* 
      * Todos los métodos de esta clase son estáticos, y por lo tanto pueden ser invocados sin tener que 
      crear objetos de la clase. Es suficiente con nombrar la clase al invocar el método: int x = Consola.readInt(); 
@@ -19,32 +21,12 @@ public class Consola {
      *
      * @return el string leido (sin el salto de linea)
      */
-    public static String leerString() {
-        int ch;
-        String r = "";
-        boolean done = false;
-        while (!done) {
-            try {
-                ch = System.in.read();
-                if (ch < 0 || (char) ch == '\n') {
-                    done = true;
-                } else {
-                    if ((char) ch != '\r') {
-                        r = r + (char) ch;
-                    }
-                }
-            } catch (java.io.IOException e) {
-                done = true;
-            }
-        }
-        return r;
+   public static String leerString() {
+        // Una sola línea limpia que lee todo hasta el Enter de forma nativa
+        return teclado.nextLine();
     }
-
-    /**
-     * Lee un integer desde teclado. La entrada termina con un salto de linea
-     *
-     * @return el valor cargado, como un int
-     */
+    
+    // Tu método leerInt() se queda exactamente igual, no lo toques:
     public static int leerInt() {
         while (true) {
             try {
@@ -54,7 +36,12 @@ public class Consola {
             }
         }
     }
-    
+    /**
+     * Lee un integer desde teclado. La entrada termina con un salto de linea
+     *
+     * @return el valor cargado, como un int
+     */
+  
     public static long leerLong() {
         while (true) {
             try {

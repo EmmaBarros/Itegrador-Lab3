@@ -42,6 +42,7 @@ public class GestorFestivalMenu {
         int opcionSeleccionada;
 
         do {
+            
             opcionSeleccionada = menuPrincipal.ejecutar();
 
             switch (opcionSeleccionada) {
@@ -124,6 +125,11 @@ public class GestorFestivalMenu {
      * Submenú interno para crear la subclase correcta.
      */
   private void registrarNuevaSolicitudSubmenu() {
+      Consola.emitirMensajeLN("\n=== REGISTRO DE NUEVA SOLICITUD ===");
+        Consola.emitirMensajeLN("Seleccione el tipo de solicitud:");
+        Consola.emitirMensajeLN("1 - Reclamo de Entradas");
+        Consola.emitirMensajeLN("2 - Solicitud de Asistencia");
+        Consola.emitirMensaje("Respuesta: ");
     int tipo = Consola.leerInt();
     Solicitud nueva = null;
 

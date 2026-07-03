@@ -45,6 +45,7 @@ public class Menu {
             Consola.emitirMensaje("Respuesta:");
             opcion=Consola.leerInt();
             
+            
             if(!Validar.ValidarIntRang(opcion, 1, opciones.length)){
                 Consola.emitirMensajeLN("Opcion no valida.");
             }
