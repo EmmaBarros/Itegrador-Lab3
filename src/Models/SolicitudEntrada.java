@@ -1,4 +1,5 @@
 package Models;
+import Exceptions.DatoInvalidoException;
 import Views.Validar;
 /**
  * @author emami
@@ -17,13 +18,13 @@ public class SolicitudEntrada extends Solicitud {
     }
     
     @Override
-    public void cargarDatos(){
+    public void cargarDatos()throws DatoInvalidoException {
       super.cargarDatos();
       ingresarNumComprobante();
     }
     
 
-    private void ingresarNumComprobante(){
+    private void ingresarNumComprobante()throws DatoInvalidoException {
         this.numComprobante = Validar.leerString(
             "Ingrese el numero de comprobante de la entrada: ", 
             "Error: El numero de comprobante no puede estar vacio."

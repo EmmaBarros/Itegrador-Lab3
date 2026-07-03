@@ -22,7 +22,6 @@ public abstract class Solicitud {
     protected int prioridad;
     protected String estado;
 
-    // Constructor vacio: inicializa todo por defecto antes de cargar por teclado
     public Solicitud() {
         this.codSol = 0; // Se va a pisar cuando llamemos a cargarDatos()
         this.nombreAsist = "";
@@ -32,7 +31,6 @@ public abstract class Solicitud {
         this.estado = "Pendiente";
     }
     
-    // Constructor parametrizado (por si lo necesitamos mas adelante)
     public Solicitud(int codSol, String nombreAsist, String tipoSoli, String descrip, int prioridad) {
         this.codSol = codSol;
         this.nombreAsist = nombreAsist;
@@ -52,11 +50,9 @@ public abstract class Solicitud {
     }  
 
     // === METODO DE CARGA PRINCIPAL ===
-    // Ojo: ahora avisa que puede tirar la excepcion si cargan un codigo invalido
-    public void cargarDatos() throws DatoInvalidoException {
+        public void cargarDatos() throws DatoInvalidoException {
         Consola.emitirMensajeLN("\n--- Cargando Datos de la Nueva Solicitud ---");
         
-        // Lo primero que llamo es a mi nuevo metodo para meter el codigo manual
         ingresarCodSol(); 
         
         ingresarNombreAsist();
@@ -64,7 +60,6 @@ public abstract class Solicitud {
         ingresarPrioridad();
     }
   
-    // Nuevo metodo: Pide el codigo y valida que no sea negativo o cero
     private void ingresarCodSol() throws DatoInvalidoException {
         Consola.emitirMensaje("Ingrese el codigo de la solicitud: ");
         int codIngresado = Consola.leerInt();
