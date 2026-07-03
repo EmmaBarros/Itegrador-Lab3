@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package Models;
-import Consola.Consola;
-import Validar.Validar;
+import Views.Consola;
+import Views.Validar;
 /**
  *
  * @author emami

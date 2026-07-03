@@ -1,6 +1,5 @@
 
-package Validar;
-import Consola.Consola;
+package Views;
 /**
  *
  * @author emami

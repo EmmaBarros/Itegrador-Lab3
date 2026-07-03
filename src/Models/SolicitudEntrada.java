@@ -1,5 +1,5 @@
 package Models;
-import Validar.Validar;
+import Views.Validar;
 /**
  * @author emami
  */
