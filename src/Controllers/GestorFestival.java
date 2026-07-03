@@ -16,7 +16,12 @@ public class GestorFestival {
     }
 
     // === 1. REGISTRAR UNA SOLICITUD ===
-    public void registrarSolicitud(Solicitud nuevaSolicitud) {
+    public void registrarSolicitud(Solicitud nuevaSolicitud) throws DatoInvalidoException {
+        // Corroboro si el codigo de la solicitud ya existe en la cola (CP02)
+        if (existeCodigo(nuevaSolicitud.getCodSol())) {
+            throw new DatoInvalidoException("Error: Ya existe una solicitud registrada con el codigo " + nuevaSolicitud.getCodSol());
+        }
+        
         // Uso insertar que es el metodo real de mi cola
         colaSolicitudes.insertar(nuevaSolicitud);
     }
@@ -159,7 +164,6 @@ public class GestorFestival {
             throw new DatoInvalidoException("La cola esta vacia. No hay ninguna solicitud al frente.");
         }
         
-        // Truco para chusmear el frente: como mi metodo quitar() destruye el frente,
         // saco el primero, guardo su dato, y despues recorro y rearmo la cola entera en la auxiliar
         ColaDinamica<Solicitud> colaAuxiliar = new ColaDinamica<>();
         
@@ -178,5 +182,35 @@ public class GestorFestival {
         this.colaSolicitudes = colaAuxiliar;
         
         return alFrente; 
+    }
+
+    // === METODO AUXILIAR PRIVADO ===
+    // Metodo para buscar si el codigo ya existe recorriendo la cola sin romperla
+    private boolean existeCodigo(int codigo) {
+        // Excepcion si la cola esta vacia, el codigo no existe
+        if (colaSolicitudes.colaVacia()) {
+            return false;
+        }
+
+        // Creo una cola auxiliar para no destruir los datos al descolar
+        ColaDinamica<Solicitud> colaAuxiliar = new ColaDinamica<>();
+        boolean existe = false;
+
+        while (!colaSolicitudes.colaVacia()) {
+            // El metodo quitar() me devuelve un Nodo, asi que le saco la Solicitud con getDato()
+            Nodo<Solicitud> nodoActual = colaSolicitudes.quitar();
+            Solicitud actual = nodoActual.getDato();
+
+            // Corroboro si los codigos coinciden
+            if (actual.getCodSol() == codigo) {
+                existe = true;
+            }
+            // La guardo en la auxiliar para no perderla
+            colaAuxiliar.insertar(actual);
+        }
+
+        // Al final restauro mi cola original con los datos de la auxiliar
+        this.colaSolicitudes = colaAuxiliar;
+        return existe;
     }
 }

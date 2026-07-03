@@ -123,26 +123,28 @@ public class GestorFestivalMenu {
     /**
      * Submenú interno para crear la subclase correcta.
      */
-    private void registrarNuevaSolicitudSubmenu() {
-        Consola.emitirMensajeLN("\n--- SELECCIONE EL TIPO DE SOLICITUD ---");
-        Consola.emitirMensajeLN("1 - Reclamo de Entradas");
-        Consola.emitirMensajeLN("2 - Asistencia en Predio");
-        
-        int tipo = Consola.leerInt();
-        Solicitud nueva = null;
+  private void registrarNuevaSolicitudSubmenu() {
+    int tipo = Consola.leerInt();
+    Solicitud nueva = null;
 
-        if (tipo == 1) {
-            nueva = new SolicitudEntrada();
-        } else if (tipo == 2) {
-            nueva = new SolicitudAsistencia();
-        } else {
-            Consola.emitirMensajeLN("Tipo invalido. Operacion cancelada.");
-            return;
-        }
+    if (tipo == 1) {
+        nueva = new SolicitudEntrada();
+    } else if (tipo == 2) {
+        nueva = new SolicitudAsistencia();
+    } else {
+        Consola.emitirMensajeLN("Tipo invalido. Operacion cancelada.");
+        return;
+    }
 
+    // Ponemos el bloque try-catch aquí para capturar el error de carga de datos
+    try {
         // Carga polimórfica automática
         nueva.cargarDatos();
         gestor.registrarSolicitud(nueva);
         Consola.emitirMensajeLN("\n[OK] Solicitud registrada exitosamente con el Codigo: " + nueva.getCodSol());
+    } catch (DatoInvalidoException e) {
+        // Si salta un error de validación en la carga, lo mostramos amigablemente sin romper el programa
+        Consola.emitirMensajeLN("\n[ERROR] No se pudo registrar la solicitud: " + e.getMessage());
     }
+}
 }
